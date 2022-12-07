@@ -1,28 +1,21 @@
-import React, { Dispatch, SetStateAction, useState , KeyboardEvent} from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useState,
+  KeyboardEvent,
+} from 'react';
 import CanvasClock from '../components/CanvasClock';
 import styled, { css } from 'styled-components';
 import { SearchImg } from '../components/GameStart';
 import { Typography } from '../../../components/Typography';
 import { customColor } from '../../../constants/customColor';
 
-
 interface IHelperModal {
   setHelperModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-
 const HelperModal = ({ setHelperModalOpen }: IHelperModal) => {
-
   
-  const [color, setColor] = useState("#006DA3")
- 
-  const handleKeyboardEvent = (e: KeyboardEvent<HTMLImageElement>) => {
-     if ( e.keyCode === 87){
-       console.log("www")
-       setColor ("#757575")
-     }
- };
- 
 
   return (
     <div>
@@ -57,13 +50,13 @@ const HelperModal = ({ setHelperModalOpen }: IHelperModal) => {
             <KeyBoard>
               <KeyBox>
                 <KeyPad color="white"></KeyPad>
-                <KeyPad  onKeyDown={handleKeyboardEvent}   color={color}>
+                <KeyPad onKeyDown={handleKeyboardEvent} color="#006DA3">
                   <span>W ㅈ</span>
                 </KeyPad>
                 <KeyPad color="white"></KeyPad>
               </KeyBox>
               <KeyBox>
-                <KeyPad color={color}>
+                <KeyPad color="#006DA3">
                   <span>A ㅁ</span>
                 </KeyPad>
                 <KeyPad color="#006DA3">
@@ -77,15 +70,17 @@ const HelperModal = ({ setHelperModalOpen }: IHelperModal) => {
                 </SpaceBar>
               </KeyBox>
               <Typography color="black" size="16" fontWeight="bold">
-              W, A, S, D 키로 방향을 조작하고 Space Bar로 공격합니다.
+                W, A, S, D 키로 방향을 조작하고 Space Bar로 공격합니다.
               </Typography>
             </KeyBoard>
+            <CanvasClock />
             <ClockBox>
-         <CanvasClock />
-         <Typography color="black" size="16" fontWeight="bold">
-              W, A, S, D 키로 방향을 조작하고 Space Bar로 공격합니다.
+              <Typography color="black" size="16" fontWeight="bold">
+                제한시간 이내에 상대보다 더 많은 적을 죽이면 승리하는
+                게임입니다.
               </Typography>
-         </ClockBox>
+            </ClockBox>
+            
           </ModalBox>
         </ModalWrapper>
       </ModalBackGround>
@@ -174,15 +169,15 @@ const KeyBoard = styled.div`
   height: 200px;
   position: relative;
   top: -100px;
-  text-align : center;
+  text-align: center;
 `;
 const KeyBox = styled.div`
   display: flex;
   height: 56px;
   margin: 5px;
-  position : relative;
-  top : -50px;
-  left : 30px;
+  position: relative;
+  top: -20px;
+  left: 30px;
 `;
 const KeyPad = styled.div`
   width: 56px;
@@ -217,5 +212,8 @@ background: ${(props) => props.color};
 `;
 
 const ClockBox = styled.div`
-
-`
+  dispaly: flex;
+  position: relative;
+  top : -70px;
+  margin-left : 40px;
+`;

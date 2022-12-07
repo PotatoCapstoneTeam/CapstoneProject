@@ -156,7 +156,7 @@ const Canvas = styled.div`
     position: absolute;
     width : 90px;
     height : 90px;
-    top : 400px;
+    top : 370px;
     right :250px;
     color : #006DA3;
   }
