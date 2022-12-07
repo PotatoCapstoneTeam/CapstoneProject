@@ -1,11 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useState } from 'react';
 
-const Tool = () => {
+
+interface ITool {
+  setHelperModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Tool = ({ setHelperModalOpen }: ITool) => {
+ 
+
   return (
     <Tools>
-      <SettingBtn src="../assets/setting.png" alt="none"></SettingBtn>
-      <HelperBtn src="../assets/help.png" alt="none"></HelperBtn>
+      <SettingBtn  src="../assets/setting.png" alt="none"></SettingBtn>
+     
+      <HelperBtn  onClick={() => {
+         setHelperModalOpen(true);
+        }} src="../assets/help.png" alt="none"></HelperBtn>
     </Tools>
   );
 };

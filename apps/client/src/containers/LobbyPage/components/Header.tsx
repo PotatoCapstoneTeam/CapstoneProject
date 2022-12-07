@@ -5,13 +5,14 @@ import MakeRoom from './MakeRoom';
 import GameStart from './GameStart';
 
 interface IHeader {
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setHelperModalOpen : React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Header = ({ setModalOpen }: IHeader) => {
+const Header = ({ setModalOpen, setHelperModalOpen }: IHeader) => {
   return (
     <Container>
-      <Tool />
+      <Tool setHelperModalOpen={setHelperModalOpen}/>
       <Menu>
         <MakeRoom setModalOpen={setModalOpen} />
         <GameStart />

@@ -8,6 +8,8 @@ import UserList from './components/UserList';
 import Header from './components/Header';
 import CreateRoomModal from './modal/CreateRoomModal';
 import axios from '../../util/axios';
+import HelperModal from './modal/HelperModal';
+
 export interface IInfo {
   nickname: string;
   winRecord: number;
@@ -19,6 +21,7 @@ export interface IUser {
 
 const LobbyPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [helperModalOpen, setHelperModalOpen] = useState(false);
   const [list, setList] = useState([]);
   const [userList, setUserList] = useState<IUser[]>([]);
   const [myInfo, setMyInfo] = useState<IInfo>();
@@ -40,7 +43,7 @@ const LobbyPage = () => {
     <div>
       <Space />
       <Container>
-        <Header setModalOpen={setModalOpen} />
+        <Header setModalOpen={setModalOpen} setHelperModalOpen={setHelperModalOpen}/>
         <ContentBox>
           <BackgroundBox />
           <Info {...myInfo!} />
@@ -49,7 +52,8 @@ const LobbyPage = () => {
           <UserList userList={userList} />
         </ContentBox>
       </Container>
-      {modalOpen && <CreateRoomModal setModalOpen={setModalOpen} />}
+      {modalOpen && <CreateRoomModal setModalOpen={setModalOpen} />} 
+      {helperModalOpen && <HelperModal setHelperModalOpen={setHelperModalOpen} />}
     </div>
   );
 };
