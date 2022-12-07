@@ -45,6 +45,10 @@ public class MessageController {
 
   @Value("${secretKey}")
   private String secretKey;
+  @Value("${selfUrl}")
+  private String selfUrl;
+  @Value("${stageUrl}")
+  private String stageUrl;
   private final RoomService roomService;
   private final UserService userService;
   private final RoomRepository roomRepository;
@@ -139,11 +143,11 @@ public class MessageController {
         httpHeaders.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" +
           " AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
 
-        String url = "https://stage.stellon.io/api";
+        String url = stageUrl + "/api";
 
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put("callback", "https://api.stellon.io/game/result/save");
+        jsonObject.put("callback", selfUrl + "/game/result/save");
         jsonObject.put("secret", secretKey);
 
         JSONArray usersJsonArray = new JSONArray();

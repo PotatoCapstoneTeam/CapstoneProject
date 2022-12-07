@@ -1,3 +1,3 @@
 export const setting = {
-  baseURL: 'https://stellon.shop',
+  baseURL: process.env['NX_MAIN_SERVER_URL'] ?? '',
 };

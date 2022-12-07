@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react';
 import { IChat } from '../components/ChatRoom';
 
 interface IUser {
-  id: number;
   nickname: string;
 }
 interface IMessage {
@@ -20,7 +19,9 @@ const useChatWebSocket = (state: string, roomId: string) => {
   useEffect(() => {
     const url = state === 'lobby' ? `/sub/lobby` : `/sub/room/${roomId}`;
     if (!client.current) {
-      const socket = new SockJS('https://stellon.shop/ws-stomp');
+      const socket = new SockJS(
+        `${process.env['NX_MAIN_SERVER_URL'] ?? ''}/ws-stomp`
+      );
       client.current = Stomp.over(() => {
         return socket;
       });
@@ -43,9 +44,10 @@ const useChatWebSocket = (state: string, roomId: string) => {
       });
     }
     return () => {
-      client.current?.disconnect();
-      client.current = undefined;
-      console.log('채팅 웹소켓 끊어짐');
+      client.current?.disconnect(async () => {
+        client.current = undefined;
+        console.log('채팅 웹소켓 끊어짐');
+      });
     };
   }, []);
 

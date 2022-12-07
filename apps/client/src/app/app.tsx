@@ -4,7 +4,6 @@ import Intro from '../routes/Intro';
 import Lobby from '../routes/Lobby';
 import SignUp from '../routes/SignUp';
 import { CookiesProvider } from 'react-cookie';
-import Space from '../canvas/Space';
 
 export function App() {
   return (

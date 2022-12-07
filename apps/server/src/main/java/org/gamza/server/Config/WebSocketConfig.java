@@ -13,7 +13,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
   @Override
   public void registerStompEndpoints(StompEndpointRegistry stompEndpointRegistry) {
     stompEndpointRegistry.addEndpoint("/ws-stomp")
-      .setAllowedOriginPatterns("http://localhost:4200")
+      .setAllowedOriginPatterns("http://localhost:4200", "https://www.stellon.io")
       .setHandshakeHandler(new CustomHandshakeHandler())
       .withSockJS();
   }

@@ -1,17 +1,19 @@
+import { IPlayer } from '../../../hooks/useRoomWebSocket';
 import styled from 'styled-components';
 import { Typography } from '../../../components/Typography';
 
 interface IUserCard {
-  state: boolean;
+  state: any;
+  nickname: any;
   // 레디상태, 닉네임, 비행기 색깔와 기종, 유저의 정보 필요
 }
 
-export const UserCard = ({ state }: IUserCard) => {
+export const UserCard = ({ state, nickname }: IUserCard) => {
   return (
     <Container>
       <MySpaceShip>
         <SpaceShipImg src="../assets/UserCard/redSpaceShip_2.png" alt="none" />
-        {state && (
+        {state === 'READY' && (
           <Ready color="yellow" size="40" fontWeight="900">
             READY
           </Ready>
@@ -20,7 +22,7 @@ export const UserCard = ({ state }: IUserCard) => {
       <Footer>
         <ReaderImg src="../assets/UserCard/Reader.png" />
         <NickName color="white" size="16">
-          임송재
+          {nickname}
         </NickName>
         <InfoImg src="../assets/UserCard/info.png" />
       </Footer>

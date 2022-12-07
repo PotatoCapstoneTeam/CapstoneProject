@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 import { IChat } from './ChatRoom';
 import { Typography } from './Typography';
@@ -5,12 +6,12 @@ import { Typography } from './Typography';
 const Chat = ({ nickname, message }: IChat) => {
   return (
     <ChatBox size="12" color="black">
-      {nickname}: {message}
+      {(nickname || 'System') + ' : ' + message}
     </ChatBox>
   );
 };
 
-export default Chat;
+export default React.memo(Chat);
 
 const ChatBox = styled(Typography)`
   width: 97%;

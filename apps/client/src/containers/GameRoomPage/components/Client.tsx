@@ -1,12 +1,18 @@
+import { IPlayer } from '../../../hooks/useRoomWebSocket';
 import styled from 'styled-components';
 import UserCard from './UserCard';
 
-export const Client = () => {
+interface IClient {
+  list: IPlayer[];
+}
+
+export const Client = ({ list }: IClient) => {
   return (
     <UserBox>
-      {[false, true, false, false, true, true, false, false].map((e, i) => (
-        <UserCard state={e} key={i} />
-      ))}
+      {list &&
+        list.map((e: IPlayer, i: number) => (
+          <UserCard state={e['readyStatus']} nickname={e['nickname']} key={i} />
+        ))}
     </UserBox>
   );
 };
@@ -18,7 +24,7 @@ const UserBox = styled.div`
   height: 380px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   margin: 12px 0;
 `;

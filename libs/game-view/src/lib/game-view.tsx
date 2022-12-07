@@ -1,5 +1,7 @@
-import styled from 'styled-components';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { ClientScene } from './scenes/client-scene';
+import { geckos } from '@geckos.io/client';
+import { ClientSocket } from './client-socket';
 
 export interface GameViewProps {
   url: string;
@@ -7,24 +9,41 @@ export interface GameViewProps {
   onEnd: () => void;
 }
 
-const Div = styled.div`
-  background-color: black;
-  width: 100%;
-  height: 100%;
-  color: white;
-`;
-
 export const GameView = (props: GameViewProps) => {
-  useEffect(() => {
-    setTimeout(() => {
-      props.onEnd();
-    }, 10000);
-  });
+  const parentRef = useRef<HTMLDivElement>(null);
 
-  return (
-    <Div>
-      <p>{props.url}</p>
-      <p>{props.token}</p>
-    </Div>
-  );
+  useEffect(() => {
+    const parent = parentRef.current;
+
+    if (!parent) {
+      return;
+    }
+
+    const socket = new ClientSocket(props.url, props.token);
+
+    let game: Phaser.Game;
+
+    socket.connect().then(() => {
+      game = new Phaser.Game({
+        antialias: false,
+        parent: parent,
+        backgroundColor: '#212123',
+        physics: {
+          default: 'arcade',
+          arcade: {
+            debug: false,
+            gravity: { y: 0 },
+          },
+        },
+        scene: [new ClientScene(socket)],
+      });
+    });
+
+    return () => {
+      socket.close();
+      game.destroy(true);
+    };
+  }, [props.token, props.url]);
+
+  return <div ref={parentRef}></div>;
 };

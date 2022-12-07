@@ -10,7 +10,7 @@ const Search = () => {
           정렬
         </Typography>
       </RangeBtn>
-      <RefreshBtn>
+      <RefreshBtn onClick={() => window.location.reload()}>
         <RefreshImg src="../assets/refresh.png" alt="none" />
         <Typography color="black" size="16">
           새로고침

@@ -9,7 +9,6 @@ pluginManagement {
 }
 
 rootProject.name = 'stellon'
-include('libs:game-server')
 include('apps:server')
 
 

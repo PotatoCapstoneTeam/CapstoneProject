@@ -2,17 +2,18 @@ import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { customColor } from '../../../constants/customColor';
 import { Typography } from '../../../components/Typography';
-import { useCookies } from 'react-cookie';
 import { SearchImg } from '../components/GameStart';
-import { lobbyApi } from '../../../api/lobbyApi';
 import useLogin from '../../../hooks/useLogin';
+import { useNavigate } from 'react-router-dom';
+import axios from '../../../util/axios';
+import { getCookie } from '../../../util/cookies';
 
 interface ICreateRoomModal {
   setModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const CreateRoomModal = ({ setModalOpen }: ICreateRoomModal) => {
-  const [cookies] = useCookies(['user_access_token', 'user_refresh_token']); // 쿠키 훅
+  const navigate = useNavigate();
   const formRef = useRef<HTMLFormElement>(null);
   const [checkBox, setCheckBox] = useState(false);
   const { logOut, reLogin } = useLogin();
@@ -20,12 +21,19 @@ const CreateRoomModal = ({ setModalOpen }: ICreateRoomModal) => {
   const onCreateRoom = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await lobbyApi.makeRoom(cookies['user_access_token'], {
+      const res = await axios.post('/room', {
         roomName: formRef.current?.['theme'].value,
         roomSize: formRef.current?.['number'].value, //int
         password: checkBox ? formRef.current?.['password'].value : '',
       });
+
+      // const res = await lobbyApi.makeRoom(cookies['user_access_token'], {
+      //   roomName: formRef.current?.['theme'].value,
+      //   roomSize: formRef.current?.['number'].value, //int
+      //   password: checkBox ? formRef.current?.['password'].value : '',
+      // });
       console.log(res.data);
+      navigate(`/game_room/${res.data.id}`);
     } catch (err: any) {
       console.log(err.response.data.code);
       if (err.response.data.code === 444) {

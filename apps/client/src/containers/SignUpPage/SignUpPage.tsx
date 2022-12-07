@@ -27,24 +27,22 @@ const SignUp = () => {
     setError,
   } = useForm<IFormInput>();
 
-  const passwordRef = useRef<string | null>(null)
-    passwordRef.current = watch("password")
-
-
-
-
+  const passwordRef = useRef<string | null>(null);
+  passwordRef.current = watch('password');
 
   const onSubmit: SubmitHandler<IFormInput> = async (data, events) => {
     console.log(data);
     events?.preventDefault();
 
     try {
-    
-      const res = await axios.post('https://stellon.shop/auth/join', {
-        email: formRef.current?.['email'].value,
-        nickname: formRef.current?.['nickname'].value,
-        password: formRef.current?.['password'].value,
-      });
+      const res = await axios.post(
+        `${process.env['NX_MAIN_SERVER_URL'] ?? ''}/auth/join`,
+        {
+          email: formRef.current?.['email'].value,
+          nickname: formRef.current?.['nickname'].value,
+          password: formRef.current?.['password'].value,
+        }
+      );
       console.log(res.data);
       navigate('/');
     } catch (err: any) {
@@ -128,21 +126,19 @@ const SignUp = () => {
                 PW Check
               </NewTypography>
               <PwChkInput
-                 {...register("passwordCheck", {
-                  required: "비밀번호를 확인해주세요",
+                {...register('passwordCheck', {
+                  required: '비밀번호를 확인해주세요',
                   validate: (value) => value === passwordRef.current,
-                  })} 
+                })}
                 type="password"
                 placeholder="비밀번호를 확인해주세요"
                 name="passwordCheck"
-                />
+              />
             </PwChkBox>
-            {errors.passwordCheck && errors.passwordCheck.type === "validate" && (
-        		<Message>비밀번호가 일치하지않습니다</Message>
-        	)}
-         
-
-           
+            {errors.passwordCheck &&
+              errors.passwordCheck.type === 'validate' && (
+                <Message>비밀번호가 일치하지않습니다</Message>
+              )}
           </SignUpBox>
           <BtnBox>
             <LoginBtn
@@ -225,7 +221,6 @@ const Input = styled.input`
   width: 400px;
   height: 32px;
 
-
   border-radius: 10px;
 `;
 
@@ -303,7 +298,6 @@ const Message = styled.p`
 const BtnBox = styled.div`
   position: relative;
   flex-direction: column;
-  top : 300px;
-  left : 110px;
- 
+  top: 300px;
+  left: 110px;
 `;

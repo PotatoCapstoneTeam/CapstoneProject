@@ -1,14 +1,19 @@
 import { Typography } from '../../../components/Typography';
 import styled from 'styled-components';
 
-export const Title = () => {
+interface ITitle {
+  name?: string;
+  id?: number;
+}
+
+export const Title = ({ name, id }: ITitle) => {
   return (
     <Theme>
       <RoomNumber size="16" color="black" fontWeight="900">
-        156번 방
+        {id}번 방
       </RoomNumber>
       <RoomName size="16" color="black" fontWeight="900">
-        임송재님의 게임방
+        {name}
       </RoomName>
     </Theme>
   );

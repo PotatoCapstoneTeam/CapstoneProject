@@ -9,9 +9,13 @@ export function getCookie(cName: string) {
     if (end === -1) end = cookieData.length;
     cValue = cookieData.substring(start, end);
   }
-  return unescape(cValue);
+  return cValue;
 }
 
 export function setCookie(name: string, value: string) {
   document.cookie = name + '=' + value + ';';
+}
+
+export function deleteCookie(name: string) {
+  document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }

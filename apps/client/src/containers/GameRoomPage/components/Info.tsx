@@ -1,13 +1,18 @@
 import styled from 'styled-components';
 import { Typography } from '../../../components/Typography';
 
-export const Info = () => {
+interface IInfo {
+  entire?: number;
+  now: number;
+}
+
+export const Info = ({ entire, now }: IInfo) => {
   return (
     <InfoRoom>
       <People>
         <PeopleImg src="../assets/GameRoomPeople.png"></PeopleImg>
         <NumberOfPeople size="16" color="black" fontWeight="900">
-          6/6
+          {entire} / {now}
         </NumberOfPeople>
       </People>
       <Tools>

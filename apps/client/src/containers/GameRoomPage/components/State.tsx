@@ -1,33 +1,32 @@
-import { ISend } from '../../../hooks/useRoomWebSocket';
 import styled from 'styled-components';
 import { Typography } from '../../../components/Typography';
 import { customColor } from '../../../constants/customColor';
 import { useNavigate } from 'react-router-dom';
+import ReadyBtn from '../../LobbyPage/components/ReadyBtn';
+import ReReady from '../../LobbyPage/components/ReReady';
 
-interface IState {
-  send: (chatting: ISend) => void;
+export interface IState {
+  ready: () => void;
+  start: () => void;
+  readyToggle: boolean;
 }
 
-export const State = ({ send }: IState) => {
+export const State = ({ ready, start, readyToggle }: IState) => {
   const navigate = useNavigate();
-  const start = (e: React.MouseEvent<HTMLElement>) => {
-    send({
-      type: 'START',
-      roomId: 61,
-      nickname: 'testUser',
-    });
-  };
-
   const outRoom = () => {
     navigate(-1);
   };
+  const startGame = () => {
+    start();
+  };
   return (
     <StateBox>
-      <div onClick={start}>
-        <Ready color="black" size="24" fontWeight="900">
-          준비
-        </Ready>
-      </div>
+      <StartBox onClick={startGame}>
+        <Start color="black" size="24" fontWeight="900">
+          시작
+        </Start>
+      </StartBox>
+      {!readyToggle ? <ReadyBtn ready={ready} /> : <ReReady ready={ready} />}
       <OutBox onClick={outRoom}>
         <Out src="../assets/logout.png" alt="none"></Out>
       </OutBox>
@@ -36,6 +35,7 @@ export const State = ({ send }: IState) => {
 };
 
 export default State;
+
 const OutBox = styled.div`
   padding: 20px;
   border-radius: 20px;
@@ -50,16 +50,23 @@ const StateBox = styled.div`
   align-items: end;
   width: 312px;
   justify-content: space-between;
+  flex-wrap: wrap;
 `;
-const Ready = styled(Typography)`
+const StartBox = styled.div``;
+const Start = styled(Typography)`
+  align-items: center;
+  justify-content: center;
+  display: flex;
   background-color: ${customColor.white};
-  padding: 5px 15px;
   padding: 20px 88px;
   border-radius: 20px;
+  height: 70px;
+  width: 230px;
   &:hover {
     cursor: pointer;
   }
 `;
+
 const Out = styled.img`
   width: 24px;
   height: 24px;

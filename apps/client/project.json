@@ -15,7 +15,15 @@
         "main": "apps/client/src/main.tsx",
         "polyfills": "apps/client/src/polyfills.ts",
         "tsConfig": "apps/client/tsconfig.app.json",
-        "assets": ["apps/client/src/favicon.ico", "apps/client/src/assets"],
+        "assets": [
+          "apps/client/src/favicon.ico",
+          "apps/client/src/assets",
+          {
+            "input": "libs/game-view/src/assets",
+            "glob": "**/*",
+            "output": "assets"
+          }
+        ],
         "styles": [],
         "scripts": [],
         "webpackConfig": "@nrwl/react/plugins/webpack"

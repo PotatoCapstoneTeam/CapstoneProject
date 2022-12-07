@@ -10,6 +10,7 @@ import CreateRoomModal from './modal/CreateRoomModal';
 import axios from '../../util/axios';
 import HelperModal from './modal/HelperModal';
 
+import { useNavigate } from 'react-router-dom';
 export interface IInfo {
   nickname: string;
   winRecord: number;
@@ -25,20 +26,34 @@ const LobbyPage = () => {
   const [list, setList] = useState([]);
   const [userList, setUserList] = useState<IUser[]>([]);
   const [myInfo, setMyInfo] = useState<IInfo>();
+  const navigate = useNavigate();
+
+  const exitScreen = (e: any) => {
+    e.preventDefault();
+    axios.delete('/room/lobby/users');
+    e.returnValue = '';
+  };
 
   useEffect(() => {
     (async () => {
-      await axios.post('/room/lobby/users');
+      window.addEventListener('unload', exitScreen);
+
+      const res = await axios.post('/auth/validate');
+      if (!res) navigate('/');
       const myInfo = await axios.get('/user');
       const watchRoom = await axios.get('/room');
+      await axios.post('/room/lobby/users');
       const watchUserList = await axios.get('/room/lobby/users');
       setUserList(watchUserList.data);
       setList(watchRoom.data);
       setMyInfo(myInfo.data);
+
+      return () => {
+        window.removeEventListener('unload', exitScreen);
+      };
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return (
     <div>
       <Space />
